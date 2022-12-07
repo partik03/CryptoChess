@@ -6,6 +6,8 @@ import { useAppContext } from './context/appcontext'
 export default function Home() {
     const { currentUser } = auth
     const [showModal, setShowModal] = useState(false)
+    const [waiting, setWaiting] = useState(false)
+    const [link, setLink] = useState(null)
     const history = useHistory()
     const newGameOptions = [
         { label: 'Black pieces', value: 'b' },
@@ -14,6 +16,11 @@ export default function Home() {
     ]
     const {currentAccount, connected,connectWallet} = useAppContext()
     console.log(currentAccount);
+    const copyToClipBoard = async() => {
+        await navigator.clipboard.writeText(window.location.href + link)
+        alert('Link copied to clipboard')
+        
+    }
     function handlePlayOnline() {
         setShowModal(true)
     }
@@ -40,7 +47,8 @@ export default function Home() {
             gameId: `${Math.random().toString(36).substr(2, 9)}_${Date.now()}`
         }
         await db.collection('games').doc(game.gameId).set(game)
-        
+        setLink(game.gameId)
+        setWaiting(true)
         // history.push(`/game/${game.gameId}`)
     }
 
@@ -74,27 +82,37 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className={`modal ${showModal ? 'is-active' : ''} is-active`}>
-                <div className="modal-background"></div>
-                <div className="modal-content">
-                    <div className="card">
-                        <div className="card-content">
-                            <div className="content">
-                                Please Select the piece you want to start
-                            </div>
-
-                        </div>
-                        <footer className="card-footer">
-                            {newGameOptions.map(({ label, value }) => (
-                                <span className="card-footer-item pointer" key={value}
-                                    onClick={() => startOnlineGame(value)}>
-                                    {label}
-                                </span>
-                            ))}
-                        </footer>
-                    </div>
+            <div className={`modal ${showModal ? 'is-active' : ''}`}>
+               { !waiting ?
+               <div className='modal_content'>
+                    <h1>Choose the color of your pieces</h1>
+                    <div className='modal_btns'>
+                    {
+                        newGameOptions.map((option, index) => {
+                            return (
+                                <button key={index} onClick={() => startOnlineGame(option.value)}>{option.label}</button>
+                            )
+                        })
+                    }
+                    </div>   
+                <button className="modal_close" onClick={() => setShowModal(false)}>X</button>
                 </div>
-                <button className="modal-close is-large" onClick={() => setShowModal(false)}></button>
+                :
+                <div className='modal_content1'>
+                <input type="text" name="" id="link_input" className="input" readOnly value={window.location + link} />
+                <div className='modal_btns1'>
+                    <button onClick={copyToClipBoard}>Copy</button>
+                {/* {
+                    newGameOptions.map((option, index) => {
+                        return (
+                            <button key={index} onClick={() => startOnlineGame(option.value)}>{option.label}</button>
+                        )
+                    })
+                } */}
+                </div>   
+            <button className="modal_close" onClick={() => {setWaiting(false);setShowModal(false)}}>X</button>
+            </div>
+                }
             </div>
         </>
     )

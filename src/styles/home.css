@@ -60,3 +60,91 @@
     color: #000;
     margin-left:auto;
 }
+.modal_content{
+    background: #22007c;
+    height: 30%;
+    width: 30%;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    color: white;
+}
+.modal_content h1{
+    margin-top: 10%;
+    font-size: x-large;
+    font-weight: bolder;
+}
+.modal_btns{
+    bottom: 10%;
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-flow: row;
+    width: 100%;
+    /* grid-row: 1/2; */
+    padding: 1em;
+    gap: 1em;
+    
+}
+.modal_btns button{
+    padding: 1rem;
+    font-size: medium;
+    cursor: pointer;
+    border-radius: 1rem;
+    background: #0d00a4;
+    outline: none;
+    border: none;
+    color: #fff;
+    box-shadow: 0rem 0rem 1rem #04052e;
+}
+.modal_close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+.modal_content1{
+    background: #22007c;
+    height: 30%;
+    width: 30%;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    justify-content: space-around;
+    color: white;
+}
+#link_input{
+    width: 80%;
+    /* height: 10%; */
+    /* position: absolute; */
+    /* top: 20%; */
+    /* bottom: 50%; */
+    /* margin-top: 10%; */
+    padding: 1rem 2rem;
+    background: #0d00a4;
+    color: white;
+    box-shadow: 0rem 0rem 1rem #04052e;
+}
+.modal_btns1 button{
+    padding: 1rem;
+    font-size: medium;
+    margin-top: auto;
+    cursor: pointer;
+    border-radius: 1rem;
+    background: #0d00a4;
+    outline: none;
+    border: none;
+    color: #fff;
+    box-shadow: 0rem 0rem 1rem #04052e;
+}
