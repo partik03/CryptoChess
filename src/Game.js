@@ -1,7 +1,7 @@
 import * as Chess from 'chess.js'
 import { BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { auth } from './firebase'
+import { auth, db } from './firebase'
 import { fromDocRef } from 'rxfire/firestore'
 
 let gameRef
@@ -13,6 +13,11 @@ export let gameSubject
 
 export async function initGame(gameRefFb) {
     const { currentUser } = auth
+    const userRf = await db.collection('users').doc(currentUser.uid).get().then(doc => doc.data())
+    console.log(userRf.wallet);
+    localStorage.setItem('userName', userRf.name)
+    localStorage.setItem('wallet', userRf.wallet)
+    // console.log( currentUser );
     if (gameRefFb) {
         gameRef = gameRefFb
         const initialGame = await gameRefFb.get().then(doc => doc.data())
@@ -24,7 +29,7 @@ export async function initGame(gameRefFb) {
         if (initialGame.status === 'waiting' && creator.uid !== currentUser.uid) {
             const currUser = {
                 uid: currentUser.uid,
-                name: localStorage.getItem('userName'),
+                name: localStorage.getItem('wallet')!=null ? localStorage.getItem('wallet') : userRf.wallet,
                 piece: creator.piece === 'w' ? 'b' : 'w'
             }
             const updatedMembers = [...initialGame.members, currUser]

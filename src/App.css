@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgb(34, 34, 34);
+    background: red;
 }
 .user-form {
     margin-top: 30px !important;
@@ -29,7 +30,7 @@
 }
 .share-game {
     position: absolute;
-    width: 500px;
+    width: 15rem;
     bottom: 0;
     left: 0;
 }

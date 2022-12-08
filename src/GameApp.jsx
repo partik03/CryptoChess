@@ -4,6 +4,7 @@ import { gameSubject, initGame, resetGame } from './Game'
 import Board from './Board'
 import { useParams, useHistory } from 'react-router-dom'
 import { db } from './firebase'
+import { useAppContext } from './context/appcontext'
 
 function GameApp() {
   const [board, setBoard] = useState([])
@@ -14,10 +15,14 @@ function GameApp() {
   const [loading, setLoading] = useState(true)
   const [status, setStatus] = useState('')
   const [game, setGame] = useState({})
+  const {currentAccount} = useAppContext()
   const { id } = useParams()
   const history = useHistory()
   const sharebleLink = window.location.href
   useEffect(() => {
+    // if(currentAccount === null){
+    //   history.push('/userform')
+    // }
     let subscribe
     async function init() {
       const res = await initGame(id !== 'local' ? db.doc(`games/${id}`) : null)
@@ -78,17 +83,9 @@ function GameApp() {
       {result && <p className="vertical-text">{result}</p>}
       {status === 'waiting' && (
         <div className="notification is-link share-game">
-          <strong>Share this game to continue</strong>
+          <strong>No Oppenent joined</strong>
           <br />
           <br />
-          <div className="field has-addons">
-            <div className="control is-expanded">
-              <input type="text" name="" id="" className="input" readOnly value={sharebleLink} />
-            </div>
-            <div className="control">
-              <button className="button is-info" onClick={copyToClipboard}>Copy</button>
-            </div>
-          </div>
         </div>
       )}
 

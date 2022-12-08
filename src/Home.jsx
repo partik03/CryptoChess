@@ -17,7 +17,7 @@ export default function Home() {
     const {currentAccount, connected,connectWallet} = useAppContext()
     console.log(currentAccount);
     const copyToClipBoard = async() => {
-        await navigator.clipboard.writeText(window.location.href + link)
+        await navigator.clipboard.writeText(window.location.href +"/game/"+ link)
         alert('Link copied to clipboard')
         
     }
@@ -38,7 +38,7 @@ export default function Home() {
         const member = {
             uid: currentUser.uid,
             piece: startingPiece === 'r' ? ['b', 'w'][Math.round(Math.random())] : startingPiece,
-            name: localStorage.getItem('userName'),
+            name: localStorage.getItem('wallet'),
             creator: true
         }
         const game = {
@@ -99,7 +99,7 @@ export default function Home() {
                 </div>
                 :
                 <div className='modal_content1'>
-                <input type="text" name="" id="link_input" className="input" readOnly value={window.location + link} />
+                <input type="text" name="" id="link_input" className="input" readOnly onClick={()=>{history.push("/game/" +link)}} value={window.location + "game/" + link} />
                 <div className='modal_btns1'>
                     <button onClick={copyToClipBoard}>Copy</button>
                 {/* {
